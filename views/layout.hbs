@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.blue-pink.min.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+</head>
+<body>
+
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer">
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+        <header class="mdl-layout__header">
+            <div class="mdl-layout__header-row">
+                <!-- Title -->
+                <span class="mdl-layout-title">Monthly Reports</span>
+                <!-- Add spacer, to align navigation to the right -->
+                <div class="mdl-layout-spacer"></div>
+                <!-- Navigation. We hide it in small screens. -->
+                <nav class="mdl-navigation mdl-layout--large-screen-only">
+                    <a class="mdl-navigation__link" href="/users/login">Login</a>
+                    <a class="mdl-navigation__link" href="/users/register">Register</a>
+                </nav>
+            </div>
+        </header>
+        <div class="mdl-layout__drawer">
+            <span class="mdl-layout-title">Where to boss?</span>
+            <nav class="mdl-navigation">
+                <a class="mdl-navigation__link" href="/users/login">Login</a>
+                <a class="mdl-navigation__link" href="/users/register">Register</a>
+            </nav>
+        </div>
+        <main class="mdl-layout__content">
+            {{{body}}}
+        </main>
+    </div>
+</div>
+<script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
+</body>
+</html>
