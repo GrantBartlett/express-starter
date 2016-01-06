@@ -13,6 +13,7 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
 var app = express();
+app.enable('strict routing');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

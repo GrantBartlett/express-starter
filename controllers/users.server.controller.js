@@ -1,6 +1,7 @@
 var express = require('express');
-var app = express.Router();
+var passport = require('passport');
 var Account = require('../models/users.server.model');
+var app = express.Router();
 
 /* User index */
 exports.index = function (req, res) {
@@ -19,18 +20,16 @@ exports.login = function (req, res) {
 
 /* User reg post */
 exports.createNew = function (req, res) {
-  console.log('registering user');
+  Account.register(new Account({username: req.body.username}), req.body.password, function (err) {
+    if (err) {
+      console.log('error while user register!', err);
+      return next(err);
+    }
 
-  app.post('/register', function (req, res, next) {
-    Account.register(new Account({username: req.body.username}), req.body.password, function (err) {
-      if (err) {
-        console.log('error while user register!', err);
-        return next(err);
-      }
+    console.log('user registered!');
 
-      console.log('user registered!');
-
-      res.redirect('/');
+    passport.authenticate('local')(req, res, function () {
+      res.redirect('/users');
     });
   });
 };

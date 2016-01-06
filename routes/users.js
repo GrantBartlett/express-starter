@@ -1,7 +1,7 @@
 var express = require('express');
 var passport = require('passport');
-var app = express.Router();
 var users = require('../controllers/users.server.controller');
+var app = express.Router();
 
 /* GET users listing. */
 app.route('/')

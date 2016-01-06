@@ -7,7 +7,6 @@ var Account = new Schema({
   birthdate: Date
 });
 
-
 Account.plugin(passportLocalMongoose);
 
-module.exports = mongoose.model('User', Account);
+module.exports = mongoose.model('Account', Account);
