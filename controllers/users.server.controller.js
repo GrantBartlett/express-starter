@@ -6,11 +6,9 @@ var app = express.Router();
 /* User index */
 exports.index = function (req, res) {
   if (req.user) {
-    console.log('herro');
-    res.render('pages/users/index', {user: req.user});
+    res.render('pages/users/index', {title: 'Profile - ' + req.user.username + '', user: req.user});
 
   } else {
-    console.log('byebye');
     res.redirect('/users/login');
   }
 };
