@@ -5,7 +5,14 @@ var app = express.Router();
 
 /* User index */
 exports.index = function (req, res) {
-  res.render('pages/users/index', {title: 'Users', user: req.user});
+  if (req.user) {
+    console.log('herro');
+    res.render('pages/users/index', {user: req.user});
+
+  } else {
+    console.log('byebye');
+    res.redirect('/users/login');
+  }
 };
 
 /* User registration landing */
@@ -23,13 +30,13 @@ exports.login = function (req, res) {
 };
 
 /* User logout landing */
-exports.logout = function(req, res) {
+exports.logout = function (req, res) {
   req.logout();
   res.redirect('/users');
 };
 
 /* User reg post */
-exports.createNew = function (req, res) {
+exports.createNew = function (req, res, next) {
   Account.register(new Account({username: req.body.username}), req.body.password, function (err) {
     if (err) {
       console.log('error while user register!', err);
