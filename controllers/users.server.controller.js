@@ -15,7 +15,17 @@ exports.register = function (req, res) {
 
 /* User login landing */
 exports.login = function (req, res) {
-  res.render('pages/users/login', {title: 'Login', user: req.user});
+  if (req.user) {
+    res.redirect('/users');
+  } else {
+    res.render('pages/users/login', {title: 'Login', user: req.user});
+  }
+};
+
+/* User logout landing */
+exports.logout = function(req, res) {
+  req.logout();
+  res.redirect('/users');
 };
 
 /* User reg post */
