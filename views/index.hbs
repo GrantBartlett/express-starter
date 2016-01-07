@@ -1,7 +1,10 @@
 <div class="mdl-grid container">
   <div class="mdl-cell mdl-cell--8-col">
     <h2 class="mdl-typography--subhead">{{page_title}}</h2>
-
-    <p>Welcome {{user.username}}</p>
+    {{#unless user}}
+      <p>Oh snap. You need to login!</p>
+    {{else}}
+      <p>Welcome {{user.username}}</p>
+    {{/unless}}
   </div>
 </div>
