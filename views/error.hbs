@@ -1,3 +1,8 @@
-<h1>{{message}}</h1>
-<h2>{{error.status}}</h2>
-<pre>{{error.stack}}</pre>
+<div class="mdl-grid container">
+  <div class="mdl-cell mdl-cell--8-col">
+    <h2 class="mdl-typography--subhead">{{error.status}} - {{message}}</h2>
+
+    <p>Oh snap {{user.username}}. Something has broken!</p>
+    {{error.stack}}
+  </div>
+</div>

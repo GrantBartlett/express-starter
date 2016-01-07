@@ -9,11 +9,16 @@ var LocalStrategy = require('passport-local').Strategy;
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 var users = require('./routes/users');
+var index = require('./routes/index');
 var config = require('./config/config');
 
 var app = express();
 
+// Local variables setup
+app.locals.title = config.title;
+
 // View engine setup
+app.enable('strict routing');
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
@@ -21,6 +26,8 @@ app.set('view engine', 'hbs');
 mongoose.connect(config.db, function (err) {
   if (err) {
     console.log('Could not connect to mongodb on localhost. Ensure that you have mongodb running on localhost and mongodb accepts connections on standard ports!');
+  } else {
+    console.log('Connected to ' + app.locals.title);
   }
 });
 
@@ -53,6 +60,7 @@ app.use(cookieParser());
 app.use(require('less-middleware')(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/users', users);
+app.use('/', index);
 
 // error handlers
 

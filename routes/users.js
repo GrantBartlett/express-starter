@@ -3,18 +3,22 @@ var passport = require('passport');
 var users = require('../controllers/users.server.controller');
 var app = express.Router();
 
-/* GET users listing. */
+/* GET users listing page. */
 app.route('/')
   .get(users.index);
 
-/* GET reg page. */
+/* GET/POST register page. */
 app.route('/register')
   .get(users.register)
   .post(users.createNew);
 
-/* GET login page. */
+/* GET/POST login page. */
 app.route('/login')
   .get(users.login)
   .post(passport.authenticate('local'), users.login);
+
+/* GET logout page. */
+app.route('/logout')
+  .get(users.logout);
 
 module.exports = app;

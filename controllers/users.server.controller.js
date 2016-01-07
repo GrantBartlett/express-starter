@@ -6,7 +6,7 @@ var app = express.Router();
 /* User index */
 exports.index = function (req, res) {
   if (req.user) {
-    res.render('pages/users/index', {title: 'Profile - ' + req.user.username + '', user: req.user});
+    res.render('pages/users/index', {page_title: 'Profile', user: req.user});
 
   } else {
     res.redirect('/users/login');
@@ -15,7 +15,7 @@ exports.index = function (req, res) {
 
 /* User registration landing */
 exports.register = function (req, res) {
-  res.render('pages/users/register', {title: 'Register'});
+  res.render('pages/users/register', {page_title: 'Register'});
 };
 
 /* User login landing */
@@ -23,7 +23,7 @@ exports.login = function (req, res) {
   if (req.user) {
     res.redirect('/users');
   } else {
-    res.render('pages/users/login', {title: 'Login', user: req.user});
+    res.render('pages/users/login', {page_title: 'Login', user: req.user});
   }
 };
 
