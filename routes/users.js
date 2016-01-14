@@ -17,6 +17,11 @@ app.route('/login')
   .get(users.login)
   .post(passport.authenticate('local'), users.login);
 
+/* GET/POST account page */
+app.route('/account')
+  .get(users.changePassword)
+  .post(users.changePassword);
+
 /* GET logout page. */
 app.route('/logout')
   .get(users.logout);

@@ -48,3 +48,35 @@ exports.createNew = function (req, res, next) {
     });
   });
 };
+
+/* User change password */
+exports.changePassword = function (req, res, next) {
+  if (req.user) {
+    res.render('pages/users/password', {page_title: 'Password', user: req.user});
+    console.log('user authd');
+
+    var account = new Account(req.user, req.password);
+
+    if (req.body.password === req.body.password_confirm) {
+
+      account.setPassword(req.body.password, function (error) {
+        if (!error) {
+          account.save(function (error) {
+            if (error) {
+              console.log(error)
+            }
+          });
+        }
+        else {
+          console.log(error)
+        }
+      });
+    } else {
+      next();
+    }
+  }
+  else {
+    console.log('not logged in');
+    res.redirect('/users');
+  }
+};
