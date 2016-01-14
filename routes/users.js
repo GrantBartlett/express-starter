@@ -19,8 +19,13 @@ app.route('/login')
 
 /* GET/POST password reset page. */
 app.route('/password-reset')
-  .get(users.passwordReset)
-  .post(users.passwordChange);
+  .get(users.password)
+  .post(users.passwordReset);
+
+/* GET/POST password change page. */
+app.route('/profile')
+  .get(users.passwordChange)
+  .post(users.passwordUpdate);
 
 /* GET logout page. */
 app.route('/logout')

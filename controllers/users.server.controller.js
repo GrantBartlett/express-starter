@@ -81,9 +81,27 @@ exports.logoutUser = function (req, res) {
  * Password reset index
  * @param req
  * @param res
+ */
+exports.password = function (req, res) {
+
+};
+
+/***
+ * Password reset email
+ * @param req
+ * @param res
+ */
+exports.passwordReset = function (req, res) {
+
+};
+
+/***
+ * Password change index
+ * @param req
+ * @param res
  * @param next
  */
-exports.passwordReset = function (req, res, next) {
+exports.passwordChange = function (req, res, next) {
   res.render('pages/users/password', {page_title: 'Password', user: req.user});
 };
 
@@ -93,21 +111,25 @@ exports.passwordReset = function (req, res, next) {
  * @param res
  * @param next
  */
-exports.passwordChange = function (req, res, next) {
-  // CHECK Password fields are NOT empty and NOT undefined
-  if (req.body.password === req.body.password_confirm && req.body.password !== undefined) {
+exports.passwordUpdate = function (req, res, next) {
+  if (req.user) {
+    // CHECK Password fields are NOT empty and NOT undefined
+    if (req.body.password === req.body.password_confirm && req.body.password !== undefined) {
 
-    // Go ahead and update the password
-    // TODO: Check username cannot be hijacked in request
-    Account.updatePassword(req.user.username, req.body, function (cb) {
-      if (cb === 'updated') {
-        res.redirect('/users');
-      }
-      else {
-        return cb;
-      }
-    });
+      // Go ahead and update the password
+      // TODO: Check username cannot be hijacked in request
+      Account.updatePassword(req.user.username, req.body, function (cb) {
+        if (cb === 'updated') {
+          res.redirect('/users');
+        }
+        else {
+          return cb;
+        }
+      });
+    } else {
+      res.sendStatus(400)
+    }
   } else {
-    res.sendStatus(400)
+    res.sendStatus(401)
   }
 };
