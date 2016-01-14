@@ -10,9 +10,10 @@ var Account = new Schema({
 Account.plugin(passportLocalMongoose);
 
 /***
- * Update Password
+ * Update User password
  * @param username
- * @param data
+ * @param request
+ * @param cb
  */
 Account.statics.updatePassword = function (username, request, cb) {
 

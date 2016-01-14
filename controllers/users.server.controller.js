@@ -35,7 +35,8 @@ exports.register = function (req, res) {
 exports.registerUser = function (req, res, next) {
   Account.register(new Account({username: req.body.username}), req.body.password, function (err) {
     if (err) {
-      return next(err);
+      // TODO: Describe why, i.e user already exists
+      res.sendStatus(403);
     }
 
     passport.authenticate('local')(req, res, function () {
@@ -93,10 +94,11 @@ exports.passwordReset = function (req, res, next) {
  * @param next
  */
 exports.passwordChange = function (req, res, next) {
-  // Password fields are not empty and undefined
+  // CHECK Password fields are NOT empty and NOT undefined
   if (req.body.password === req.body.password_confirm && req.body.password !== undefined) {
 
-    // Call update password in schema
+    // Go ahead and update the password
+    // TODO: Check username cannot be hijacked in request
     Account.updatePassword(req.user.username, req.body, function (cb) {
       if (cb === 'updated') {
         res.redirect('/users');
