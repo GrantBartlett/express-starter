@@ -1,7 +1,7 @@
-var express = require('express');
-var passport = require('passport');
-var users = require('../controllers/users.server.controller');
-var app = express.Router();
+var express = require('express'),
+  passport = require('passport'),
+  users = require('../controllers/users.server.controller'),
+  app = express.Router();
 
 /* GET users listing page. */
 app.route('/')
@@ -10,20 +10,20 @@ app.route('/')
 /* GET/POST register page. */
 app.route('/register')
   .get(users.register)
-  .post(users.createNew);
+  .post(users.registerUser);
 
 /* GET/POST login page. */
 app.route('/login')
   .get(users.login)
-  .post(passport.authenticate('local'), users.login);
+  .post(passport.authenticate('local'), users.loginUser);
 
-/* GET/POST account page */
-app.route('/account')
-  .get(users.changePassword)
-  .post(users.changePassword);
+/* GET/POST password reset page. */
+app.route('/password-reset')
+  .get(users.passwordReset)
+  .post(users.passwordChange);
 
 /* GET logout page. */
 app.route('/logout')
-  .get(users.logout);
+  .get(users.logoutUser);
 
 module.exports = app;

@@ -1,9 +1,13 @@
-var express = require('express');
-var passport = require('passport');
-var Account = require('../models/users.server.model');
-var app = express.Router();
+var express = require('express'),
+  passport = require('passport'),
+  Account = require('../models/users.server.model'),
+  app = express.Router();
 
-/* User index */
+/***
+ * Index
+ * @param req
+ * @param res
+ */
 exports.index = function (req, res) {
   if (req.user) {
     res.render('pages/users/index', {page_title: 'Profile', user: req.user});
@@ -13,35 +17,26 @@ exports.index = function (req, res) {
   }
 };
 
-/* User registration landing */
+/***
+ * Register index
+ * @param req
+ * @param res
+ */
 exports.register = function (req, res) {
   res.render('pages/users/register', {page_title: 'Register'});
 };
 
-/* User login landing */
-exports.login = function (req, res) {
-  if (req.user) {
-    res.redirect('/users');
-  } else {
-    res.render('pages/users/login', {page_title: 'Login', user: req.user});
-  }
-};
-
-/* User logout landing */
-exports.logout = function (req, res) {
-  req.logout();
-  res.redirect('/users');
-};
-
-/* User reg post */
-exports.createNew = function (req, res, next) {
+/***
+ * Register a new User
+ * @param req
+ * @param res
+ * @param next
+ */
+exports.registerUser = function (req, res, next) {
   Account.register(new Account({username: req.body.username}), req.body.password, function (err) {
     if (err) {
-      console.log('error while user register!', err);
       return next(err);
     }
-
-    console.log('user registered!');
 
     passport.authenticate('local')(req, res, function () {
       res.redirect('/users');
@@ -49,13 +44,68 @@ exports.createNew = function (req, res, next) {
   });
 };
 
-/* User change password */
-exports.changePassword = function (req, res, next) {
-  res.render('pages/users/password', {page_title: 'Password', user: req.user});
+/***
+ * Login index
+ * @param req
+ * @param res
+ */
+exports.login = function (req, res) {
+  res.render('pages/users/login', {page_title: 'Login'});
+};
 
-  if (req.body.password === req.body.password_confirm && req.body.password !== undefined) {
-    Account.updatePassword(req.user.username, req.body);
+/***
+ * Login user
+ * @param req
+ * @param res
+ */
+exports.loginUser = function (req, res) {
+  if (req.user) {
+    res.redirect('/users');
   } else {
-    // tough luck
+    res.sendStatus(401);
+  }
+};
+
+/***
+ * Logout user
+ * @param req
+ * @param res
+ */
+exports.logoutUser = function (req, res) {
+  req.logout();
+  res.redirect('/users');
+};
+
+/***
+ * Password reset index
+ * @param req
+ * @param res
+ * @param next
+ */
+exports.passwordReset = function (req, res, next) {
+  res.render('pages/users/password', {page_title: 'Password', user: req.user});
+};
+
+/***
+ * Password change
+ * @param req
+ * @param res
+ * @param next
+ */
+exports.passwordChange = function (req, res, next) {
+  // Password fields are not empty and undefined
+  if (req.body.password === req.body.password_confirm && req.body.password !== undefined) {
+
+    // Call update password in schema
+    Account.updatePassword(req.user.username, req.body, function (cb) {
+      if (cb === 'updated') {
+        res.redirect('/users');
+      }
+      else {
+        return cb;
+      }
+    });
+  } else {
+    res.sendStatus(400)
   }
 };

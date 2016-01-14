@@ -1,6 +1,6 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-var passportLocalMongoose = require('passport-local-mongoose');
+var mongoose = require('mongoose'),
+  Schema = mongoose.Schema,
+  passportLocalMongoose = require('passport-local-mongoose');
 
 var Account = new Schema({
   username: String,
@@ -9,58 +9,40 @@ var Account = new Schema({
 
 Account.plugin(passportLocalMongoose);
 
-Account.statics.updatePassword = function (username, data) {
+/***
+ * Update Password
+ * @param username
+ * @param data
+ */
+Account.statics.updatePassword = function (username, request, cb) {
 
+  // Identifying... do you even exist bro?
   this.findOne({username: username}, function (err, user) {
-    if (err) {
-      throw err;
-    } else {
+    if (!err) {
 
-      if (data.password === data.password_confirm) {
+      // Checking credentials
+      if (request.password === request.password_confirm && request.password !== undefined) {
+        // Set new password
+        user.setPassword(request.password, function (err) {
 
-        console.log('passwords match');
-        user.setPassword(data.password, function (error) {
-          if (!error) {
-
-            user.save(function (error) {
-              if (error) {
-                console.log(error)
+          if (!err) {
+            // And save
+            user.save(function (err) {
+              if (!err) {
+                return cb('updated');
+              } else {
+                return cb('error');
               }
             });
-
-
-          } else {
-            return error;
           }
         });
-
-      } else {
-        return 'passwords do not match';
       }
+
+    } else {
+      // No user on the record goes by this name, bye bye!
+      return cb('not found');
     }
   });
-
-  //return this.findOne({
-  //  _id: user_id
-  //}, function (error, doc) {
-  //  console.log('err' + error);
-  //  console.log('doc' + doc);
-  //});
-
-  /*
-   Account.instance.setPassword(user, function (err) {
-   if (err) {
-   throw err;
-   }
-   else {
-
-
-
-
-   }
-   });
-   */
 };
-
 
 module.exports = mongoose.model('Account', Account);
