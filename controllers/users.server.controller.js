@@ -127,9 +127,9 @@ exports.passwordUpdate = function (req, res, next) {
         }
       });
     } else {
-      res.sendStatus(400)
+      res.sendStatus(400);
     }
   } else {
-    res.sendStatus(401)
+    res.sendStatus(401);
   }
 };
