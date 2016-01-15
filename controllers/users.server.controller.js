@@ -1,7 +1,6 @@
 var express = require('express'),
   passport = require('passport'),
-  Account = require('../models/users.server.model'),
-  app = express.Router();
+  User = require('../models/users.server.model');
 
 /***
  * Index
@@ -33,16 +32,17 @@ exports.register = function (req, res) {
  * @param next
  */
 exports.registerUser = function (req, res, next) {
-  Account.register(new Account({username: req.body.username}), req.body.password, function (err) {
-    if (err) {
-      // TODO: Describe why, i.e user already exists
-      res.sendStatus(403);
-    }
+  User.register(new User({username: req.body.username, roles: 'administrator'}),
+    req.body.password, function (err) {
+      if (err) {
+        // TODO: Describe why, i.e user already exists
+        res.sendStatus(403);
+      }
 
-    passport.authenticate('local')(req, res, function () {
-      res.redirect('/users');
+      passport.authenticate('local')(req, res, function () {
+        res.redirect('/users');
+      });
     });
-  });
 };
 
 /***
@@ -118,7 +118,7 @@ exports.passwordUpdate = function (req, res, next) {
 
       // Go ahead and update the password
       // TODO: Check username cannot be hijacked in request
-      Account.updatePassword(req.user.username, req.body, function (cb) {
+      User.updatePassword(req.user.username, req.body, function (cb) {
         if (cb === 'updated') {
           res.redirect('/users');
         }

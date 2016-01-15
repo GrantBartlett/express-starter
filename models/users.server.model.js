@@ -2,11 +2,12 @@ var mongoose = require('mongoose'),
   Schema = mongoose.Schema,
   passportLocalMongoose = require('passport-local-mongoose');
 
-var Account = new Schema({
-  username: String
+var Users = new Schema({
+  username: String,
+  roles: ['administrator']
 });
 
-Account.plugin(passportLocalMongoose);
+Users.plugin(passportLocalMongoose);
 
 /***
  * Update User password
@@ -14,7 +15,7 @@ Account.plugin(passportLocalMongoose);
  * @param request
  * @param cb
  */
-Account.statics.updatePassword = function (username, request, cb) {
+Users.statics.updatePassword = function (username, request, cb) {
 
   // Identifying... do you even exist bro?
   this.findOne({username: username}, function (err, user) {
@@ -45,4 +46,4 @@ Account.statics.updatePassword = function (username, request, cb) {
   });
 };
 
-module.exports = mongoose.model('Account', Account);
+module.exports = mongoose.model('User', Users);
