@@ -17,34 +17,20 @@
         <span class="mdl-layout-title">{{ title }}{{#if page_title}} - {{page_title}}{{/if}}</span>
         <!-- Add spacer, to align navigation to the right -->
         <div class="mdl-layout-spacer"></div>
-        <!-- Navigation. We hide it in small screens. -->
-        <nav class="mdl-navigation mdl-layout--large-screen-only">
-          <!-- Right aligned menu below button -->
-          {{#if user}}
-            <!-- Left aligned menu below button -->
-            <button id="demo-menu-lower-left"
-                    class="mdl-button mdl-js-button mdl-button--icon">
-              <i class="material-icons">more_vert</i>
-            </button>
-
-            <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
-                for="demo-menu-lower-left">
-              <li disabled class="mdl-menu__item">{{user.username}}</li>
-              <li class="mdl-menu__item"><a href="/users/logout">Logout</a></li>
-            </ul>
-          {{/if }}
-        </nav>
+        <!-- @TODO: Add secondary navigation for creation/edit/delete into new partial -->
       </div>
     </header>
     <div class="mdl-layout__drawer">
-      <span class="mdl-layout-title">Where to boss?</span>
+      <span class="mdl-layout-title">Where to?</span>
       <nav class="mdl-navigation">
         {{#unless user}}
           <a class="mdl-navigation__link" href="/users/login">Login</a>
           <a class="mdl-navigation__link" href="/users/register">Register</a>
         {{else}}
-          <a class="mdl-navigation__link" href="/users/">Profile</a>
-          <a class="mdl-navigation__link" href="/users/profile">Change Password</a>
+          <a class="mdl-navigation__link" href="/users/profile">Profile</a>
+          <a class="mdl-navigation__link" href="/clients/">Clients</a>
+          <a class="mdl-navigation__link" href="/stacks/">Stacks</a>
+          <a class="mdl-navigation__link" href="/Reports/">Reports</a>
           <a class="mdl-navigation__link" href="/users/logout">Logout</a>
         {{/unless}}
       </nav>

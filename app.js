@@ -8,7 +8,9 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
+
 var users = require('./routes/users');
+var clients = require('./routes/clients');
 var index = require('./routes/index');
 var config = require('./config/config');
 
@@ -59,7 +61,10 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(require('less-middleware')(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
+
+// routes
 app.use('/users', users);
+app.use('/clients', clients);
 app.use('/', index);
 
 // error handlers
