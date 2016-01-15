@@ -10,7 +10,8 @@ var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 
 var users = require('./routes/users');
-var clients = require('./routes/clients');
+//var clients = require('./routes/clients');
+var stacks = require('./routes/stacks');
 var index = require('./routes/index');
 var config = require('./config/config');
 
@@ -64,7 +65,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // routes
 app.use('/users', users);
-app.use('/clients', clients);
+//app.use('/clients', clients);
+app.use('/stacks', stacks);
 app.use('/', index);
 
 // error handlers

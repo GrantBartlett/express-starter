@@ -1,5 +1,4 @@
 var express = require('express'),
-  passport = require('passport'),
   Client = require('../models/clients.server.model');
 
 /***
