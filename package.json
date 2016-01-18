@@ -19,11 +19,16 @@
     "express-slash": "^2.0.1",
     "hbs": "~3.1.0",
     "less-middleware": "1.0.x",
+    "mocha": "^2.3.4",
     "mongoose": "^4.3.4",
     "morgan": "~1.6.1",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^3.1.0",
-    "serve-favicon": "~2.3.0"
+    "serve-favicon": "~2.3.0",
+    "should": "^8.1.1"
+  },
+  "devDependencies": {
+    "supertest": "^1.1.0"
   }
 }

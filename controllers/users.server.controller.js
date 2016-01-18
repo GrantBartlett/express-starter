@@ -39,7 +39,7 @@ exports.registerUser = function (req, res, next) {
         res.sendStatus(403);
       } else {
         passport.authenticate('local')(req, res, function () {
-          res.redirect('/users');
+          res.sendStatus(200);
         });
       }
     });
@@ -61,8 +61,9 @@ exports.login = function (req, res) {
  */
 exports.loginUser = function (req, res) {
   if (req.user) {
-    res.redirect('/users');
-  } else {
+    res.sendStatus(200);
+  }
+  else {
     res.sendStatus(401);
   }
 };
