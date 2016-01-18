@@ -37,11 +37,11 @@ exports.registerUser = function (req, res, next) {
       if (err) {
         // TODO: Describe why, i.e user already exists
         res.sendStatus(403);
+      } else {
+        passport.authenticate('local')(req, res, function () {
+          res.redirect('/users');
+        });
       }
-
-      passport.authenticate('local')(req, res, function () {
-        res.redirect('/users');
-      });
     });
 };
 
